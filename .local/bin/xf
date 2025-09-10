@@ -1,0 +1,79 @@
+#!/bin/sh -eu
+
+# Get command line arguments
+help= quiet=-q stdout= verbose=
+while getopts 'chv' OPTION; do
+	case "$OPTION" in
+		c) stdout=-c && shift			;;
+		h) help=1 && shift				;;
+		v) quiet= verbose=-v && shift	;;
+	esac
+done
+
+# Show help message if help flag was set or no file was given
+if [ -n "$help" -o $# -eq 0 -o $# -gt 2 ]; then
+	echo "xf - Extract file
+Usage: $(basename $0) [options] file [dest]
+
+Options:
+ -c		Write to stdout
+ -h		Show this message
+ -v		Show verbose output"
+	[ -n "$help" ] && exit || exit 1
+# Check file is a valid file
+elif [ ! -f "$1" ]; then
+	echo "xf: $1 is not a valid file"
+	exit 1
+fi
+
+# Get the archive's full path
+archive="$(realpath "$1")"
+
+# cd to destination if specified
+if [ $# -eq 2 ]; then
+	cd "$2" || exit 1
+fi
+
+# Extract ze file
+case "$1" in
+	*.tar | *.apk | *.tar.bz2 | *.tbz2 | *.tar.gz | *.tgz | *.tar.lz | *.tlz | *.tar.lzma | *.tlzma | *.tar.lzop | *.tlzop | *.tar.xz | *.txz | *.tar.Z  | *.tZ | *.tar.zst | *.tzst )
+		[ -n "$stdout" ] && stdout=-O
+		tar xa "$stdout" "$verbose" -f "$archive"
+		;;
+	*.7z | *.iso )
+		[ -n "$stdout" ] && stdout=-so
+		7z x "$stdout" "$archive"
+		;;
+	*.ar | *.deb )
+		[ -n "$stdout" ] && stdout=-p
+		ar x "$stdout" "$verbose" "$archive"
+		;;
+	*.bz2 )
+		bunzip2 "$stdout" "$verbose" "$archive" 	;;
+	*.cpio )
+		[ -n "$stdout" ] && stdout=--to-stdout
+		cpio -i "$stdout" "$verbose" "$archive"
+		;;
+	*.gz )
+		gunzip "$stdout" "$verbose" "$archive"		;;
+	*.lz )
+		lzip -d "$stdout" "$verbose" "$archive"		;;
+	*.lzma )
+		unlzma "$stdout" "$verbose" "$archive"		;;
+	*.lzop )
+		unlzop "$stdout" "$verbose" "$archive" 		;;
+	*.xz )
+		unxz "$stdout" "$verbose" "$archive"		;;
+	*.Z )
+		uncompress "$stdout" "$verbose" "$archive"	;;
+	*.zip | *.crx | *.docx | *.epub | *.jar | *.odf | *.odg | *.odp | *.ods | *.odt | *.pptx | *.war | *.xlsx  | *.xpi )
+		[ -n "$stdout" ] && stdout=-p
+		unzip "$quiet" "$stdout" "$archive"
+		;;
+	*.zst )
+		unzstd "$stdout" "$verbose" "$archive"		;;
+	* )
+		echo "xf: $1 cannot be extracted"
+		exit 1
+		;;
+esac

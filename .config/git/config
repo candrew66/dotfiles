@@ -1,0 +1,24 @@
+[user]
+	name = Callum Andrew
+	email = dev@candrew.net
+	signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICnMbcAN1onxiVQbicBcsVOicy1ef9tr/w0d3iBakHZS dev@candrew.net
+[branch]
+	sort = -committerdate
+[diff]
+	tool = nvimdiff
+	colorMoved = default
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = ~/.ssh/allowed_signers
+[merge]
+	conflictStyle = zdiff3
+[sendemail]
+	annotate = yes
+	confirm = auto
+	smtpServer = smtp.migadu.com
+	smtpUser = dev@candrew.net
+	smtpEncryption = ssl
+	smtpServerPort = 465
+[tag]
+	gpgSign = true

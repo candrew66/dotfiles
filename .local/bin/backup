@@ -1,0 +1,48 @@
+#!/bin/sh -u
+
+# Get command line arguments
+help= repo= ssh=
+while getopts 'hr:s' OPTION; do
+	case "$OPTION" in
+		h) help=1 && shift					;;
+		r) repo="--repo $OPTARG" && shift 2	;;
+		s) ssh=1 && shift					;;
+	esac
+done
+
+# Show help message
+if [ -n "$help" -o $# -eq 0 ]; then
+	echo "Usage: $(basename $0) [options] directory/host
+
+Create package lists and backup directory.
+
+Options:
+ -h		Show this message
+ -r REPOSITORY	Restic repository to backup to
+ -s		Backup home folder from SSH host"
+	[ -n "$help" ] && exit || exit 1
+fi
+
+# Create package lists
+if [ -n "$ssh" ]; then
+	ssh "$1" "sh -lc pkgbackup"
+else
+	pkgbackup
+fi
+
+# Setup sftp host if ssh flag was passed
+backup_dir="$1"
+if [ -n "$ssh" ]; then
+	backup_dir=~/.local/mnt
+	mkdir -p "$backup_dir"
+	rclone mount --sftp-host "$1" :sftp: "$backup_dir" --daemon --read-only
+fi
+
+# Backup directory
+restic backup "$backup_dir" "$repo" --exclude-file ~/.config/restic/exclude.list
+
+# Clean up sftp mountpoint if ssh flag was passed
+if [ -n "$ssh" ]; then
+	fusermount3 -u "$backup_dir"
+	rm -r "$backup_dir"
+fi
