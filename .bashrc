@@ -24,3 +24,9 @@ alias diff="diff --color"
 alias grep="grep --color"
 alias ls="ls --group-directories-first --color"
 alias tree="tree -C"
+
+# Functions
+## Resume terminated downloads
+function dl() {
+	until wget -c "$1"; do :; done
+}
