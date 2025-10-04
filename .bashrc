@@ -30,3 +30,13 @@ alias tree="tree -C"
 function dl() {
 	until wget -c "$1"; do :; done
 }
+
+# Bash completion
+if ! shopt -oq posix; then
+	bashcomp="/usr/share/bash-completion/bash_completion /etc/bash_completion"
+	for i in $bashcomp; do
+		if [ -f "$i" ]; then
+			source "$i"
+		fi
+	done
+fi
