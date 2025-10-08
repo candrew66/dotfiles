@@ -16,3 +16,4 @@ set smartcase
 let mapleader="\<space>"
 nnoremap <leader>l :setl list! <CR>
 nnoremap <leader>s :setl spell! <CR>
+nnoremap <leader>w :echo wordcount().words <CR>
