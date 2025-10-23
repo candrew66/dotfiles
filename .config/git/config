@@ -11,6 +11,8 @@
 	format = ssh
 [gpg "ssh"]
 	allowedSignersFile = ~/.ssh/allowed_signers
+[http]
+	cookieFile = ~/.local/share/git/gitcookies
 [merge]
 	conflictStyle = zdiff3
 [sendemail]
