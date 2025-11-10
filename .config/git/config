@@ -5,7 +5,7 @@
 [branch]
 	sort = -committerdate
 [diff]
-	tool = nvimdiff
+	tool = vimdiff
 	colorMoved = default
 [gpg]
 	format = ssh

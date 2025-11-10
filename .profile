@@ -5,7 +5,7 @@ export PATH=~/.local/bin:/var/lib/flatpak/exports/bin:$PATH
 
 # Default apps
 export BROWSER="librewolf --private-window"
-export EDITOR=nvim
+export EDITOR=vim
 
 # App settings
 export LANG=en_AU.UTF-8 # Locale
