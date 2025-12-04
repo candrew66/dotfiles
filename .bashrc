@@ -1,7 +1,7 @@
 # .bashrc: Executed for interactive shells
 
 # Prompt
-PS1="\h \w \$ "
+PS1="\[\e]0;${SSH_TTY+\h} \w\a\]\h \w \$ "
 
 # Aliases
 alias fzopen='setsid xdg-open "$(fzf)" &>/dev/null'
