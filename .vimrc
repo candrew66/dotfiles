@@ -20,3 +20,7 @@ let mapleader="\<space>"
 nnoremap <leader>l :setl list! <CR>
 nnoremap <leader>s :setl spell! <CR>
 nnoremap <leader>w :echon wordcount().words "W" <CR>
+
+" Filetype settings
+filetype plugin indent on
+syntax off
