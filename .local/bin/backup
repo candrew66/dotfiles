@@ -48,7 +48,7 @@ if [ -n "$ssh" ]; then
 fi
 
 # Backup directory
-restic backup "$backup_dir" "$repo" --exclude-file ~/.config/restic/exclude.list
+restic backup "$backup_dir" "$repo" --exclude-file "${XDG_CONFIG_HOME:-$HOME/.config}/restic/exclude.list"
 
 # Clean up sftp mountpoint if ssh flag was passed
 if [ -n "$ssh" ]; then

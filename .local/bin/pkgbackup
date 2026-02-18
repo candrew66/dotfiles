@@ -1,11 +1,11 @@
 #!/bin/sh -eu
 
 # Get command line arguments
-help= pkglist_dir=~/.config/packages
+help= pkglist_dir="${XDG_CONFIG_HOME:-$HOME/.config}/packages"
 while getopts 'hp:' OPTION; do
 	case "$OPTION" in
 		h) help=1							;;
-		p) pkglist_dir=$OPTARG && shift 2	;;
+		p) pkglist_dir="$OPTARG" && shift 2	;;
 	esac
 done
 
