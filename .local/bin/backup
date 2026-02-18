@@ -1,11 +1,12 @@
 #!/bin/sh -u
 
 # Get command line arguments
-help= repo= ssh=
-while getopts 'hr:s' OPTION; do
+help= port= repo= ssh=
+while getopts 'hp:r:s' OPTION; do
 	case "$OPTION" in
 		h) help=1 && shift					;;
-		r) repo="--repo $OPTARG" && shift 2	;;
+		p) ssh=1 port="$OPTARG" && shift 2	;;
+		r) repo="--repo=$OPTARG" && shift 2	;;
 		s) ssh=1 && shift					;;
 	esac
 done
@@ -18,6 +19,7 @@ Create package lists and backup directory.
 
 Options:
  -h		Show this message
+ -p PORT 	SSH port number (includes -s)
  -r REPOSITORY	Restic repository to backup to
  -s		Backup home folder from SSH host"
 	[ -n "$help" ] && exit || exit 1
@@ -25,7 +27,10 @@ fi
 
 # Create package lists
 if [ -n "$ssh" ]; then
-	ssh "$1" "sh -lc pkgbackup"
+	# Set SSH port if port flag was passed
+	[ -n "$port" ] && ssh_port="-p $port"
+
+	ssh $ssh_port "$1" "sh -lc pkgbackup"
 else
 	pkgbackup
 fi
@@ -35,7 +40,11 @@ backup_dir="$1"
 if [ -n "$ssh" ]; then
 	backup_dir=~/.local/mnt
 	mkdir -p "$backup_dir"
-	rclone mount --sftp-host "$1" :sftp: "$backup_dir" --daemon --read-only
+
+	# Set SFTP port if port flag was passed
+	[ -n "$port" ] && sftp_port="--sftp-port=$port"
+
+	rclone mount --sftp-host "$1" "$sftp_port" :sftp: "$backup_dir" --daemon --read-only
 fi
 
 # Backup directory
