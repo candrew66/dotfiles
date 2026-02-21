@@ -1,0 +1,22 @@
+# Variables
+set realname="Callum Andrew"
+set from="dev@candrew.net"
+set my_cache="~/.cache/mutt"
+set header_cache=$my_cache
+set message_cachedir=$my_cache
+
+## IMAP variables
+set folder="imaps://imap.migadu.com/"
+set imap_check_subscribed
+unset imap_passive
+set imap_user=$from
+
+### Folder locations
+set spoolfile=+INBOX
+set postponed=+Drafts
+set record=+Sent
+
+## SMTP variables
+set smtp_url="smtps://$from@smtp.migadu.com"
+
+source "~/.local/share/mutt/passwords"
