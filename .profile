@@ -15,9 +15,5 @@ export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/keyring/ssh # GCR ssh-agent
 ## Pager settings
 export LESS=R
 
-### Coloured man page output
-export MANPAGER="less -Dd+g -Du+b"
-export MANROFFOPT="-c"
-
 # Language settings
 export GOPATH=~/.go
