@@ -1,4 +1,4 @@
-#!/bin/sh -u
+#!/bin/sh
 
 # Get command line arguments
 help= port= repo= ssh=
