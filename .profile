@@ -9,7 +9,6 @@ export EDITOR=vim
 
 # App settings
 export LANG=en_AU.UTF-8 # Locale
-export RESTIC_REPOSITORY=/media/$USER/Jeffasaurus/Backup
 export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/keyring/ssh # GCR ssh-agent
 
 ## Pager settings
