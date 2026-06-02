@@ -30,11 +30,6 @@ dl() {
 	until wget -c "$1"; do :; done
 }
 
-# Read info pages in less
-info() {
-	$(which info) "$1" | less
-}
-
 # Bash completion
 if ! shopt -oq posix; then
 	bashcomp="/usr/share/bash-completion/bash_completion /etc/bash_completion"
