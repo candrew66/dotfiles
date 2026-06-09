@@ -1,11 +1,10 @@
 # .bashrc: Executed for interactive shells
 
 # Prompt
-PS1="\[\e]0;${SSH_TTY+\h }\w\a\]\h \w \$ "
+PS1="\e]0;${SSH_TTY+\h }\w\007\h \w \$ "
 
 # Aliases
 alias fzopen='setsid xdg-open "$(fzf)" &>/dev/null'
-alias mpa="mpv --no-video"
 alias rl="source ~/.bashrc"
 
 ## Human readable sizes

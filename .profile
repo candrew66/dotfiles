@@ -13,6 +13,3 @@ export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/keyring/ssh # GCR ssh-agent
 
 ## Pager settings
 export LESS=R
-
-# Language settings
-export GOPATH=~/.go
